@@ -12,6 +12,7 @@ venv/
 db.sqlite3
 media/
 static/
+env.py 
 
 # VS Code
 .vscode/
