@@ -1,4 +1,3 @@
-# For game.py
 # Screen settings
 WIDTH = 800
 HEIGHT = 600
