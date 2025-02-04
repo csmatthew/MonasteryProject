@@ -20,3 +20,6 @@ env.py
 # OS-specific files
 .DS_Store        # macOS
 Thumbs.db        # Windows
+
+# Other
+notes/
