@@ -1,5 +1,12 @@
 # Game Mechanics
 
+## Contents
+
+- [Character System](#character-system)
+- [How This Affects Game Design](#how-this-affects-game-design)
+- [Abbot Trait System](#abbot-trait-system)
+- [Abbot Governance Mechanics](#abbot-governance-mechanics)
+
 ## Character System
 
 The monastery is not "the player" - the abbot is.
@@ -24,6 +31,7 @@ The abbot it mortal - new abbots may succeed previous ones, potentially changing
 - Will there be interaction with the wider Church or rulers?
 - Can abbots be removed by external forces (e.g., corruption, papal intervention)?
 
+[🔼 Back to top](#game-mechanics)
 ## Abbot Trait System
 
 Every abbot will have traits that influence gameplay, much like CK2. These traits can be:
@@ -40,5 +48,30 @@ Every abbot will have traits that influence gameplay, much like CK2. These trait
 |Diplomatic|Better relations with nobles and Church                 |+10% favour from Church and local lords
 |Sickly    |Shorter lifespan                                        |Abbot may die younger, leading to more succession crises
 |Visionary |Encourages innovation and new monastery policies        |Unlocks special monastery reforms
+
+
+#### How Are Traits Assigned?
+
+- Random at start of tenure (with some weighted by previous abbot’s rule).
+- Some may develop over time based on decisions.
+- Events can add or remove traits (e.g., "A monk accuses the abbot of greed" → Gain Greedy trait?).
+
+[🔼 Back to top](#game-mechanics)
+## Abbot Governance Mechanics
+
+### Election or Appointment System
+- Is the abbot elected by monks or appointed by a bishop/pope?
+- Elections could have different candidates with varied skills.
+- Political intrigue: Nobles and church officials might interfere.
+
+### Monastery Rules & Policies
+Abbots can set policies affecting how the monastery runs:
+
+|Policy|Effect|
+|------|------|
+|Strict Silence Rule|Monks work harder but happiness drops|
+|Open Doors to Pilgrims|Increases income but brings more outside influence|
+|Scribe Focus|More books copied, boosting monastery renown|
+|Self-Sufficiency Mandate|Less reliance on outside donations, but slower growth|
 
 

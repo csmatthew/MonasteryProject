@@ -64,5 +64,3 @@ class Resource(models.Model):
     amount = models.IntegerField(default=0)
 ```
 [🔼 Back to top](#Contents)
-
-# Twizzle
