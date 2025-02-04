@@ -3,10 +3,18 @@ import pygame
 # Initialize Pygame
 pygame.init()
 
-# Set up the game window
+# Set up display
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Monastery Growth Game")
+
+# Colors
+LIGHT_BROWN = (181, 136, 99)  # Background color
+WHITE = (255, 255, 255)        # Abbot color (white dot)
+
+# Set abbot's starting position
+abbot_x, abbot_y = WIDTH // 2, HEIGHT // 2
+ABBOT_RADIUS = 10  # Size of the dot
 
 # Game loop
 running = True
@@ -15,11 +23,13 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Fill screen with a color (e.g., light brown)
-    screen.fill((181, 136, 99))  # RGB color
+    # Fill background
+    screen.fill(LIGHT_BROWN)
 
-    # Update the display
-    pygame.display.flip()
+    # Draw the abbot as a circle
+    pygame.draw.circle(screen, WHITE, (abbot_x, abbot_y), ABBOT_RADIUS)
 
-# Quit Pygame
+    # Refresh screen
+    pygame.display.update()
+
 pygame.quit()
