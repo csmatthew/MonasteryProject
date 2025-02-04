@@ -37,6 +37,38 @@
 
 ---
 
+## Schedule:
+
+- [ ] **February 4, 2025**: 
+   - Set up the basic game window, initialize Pygame, and create the abbot object.
+   - Handle basic keyboard input to move the abbot.
+
+- [ ] **February 5, 2025**: 
+   - Design the background, creating a simple layout for the monastery (e.g., a grid, or just a blank space with objects).
+   - Display the abbot on the screen.
+
+- [ ] **February 6, 2025**: 
+   - Add basic UI elements to show resources (food, monks, etc.).
+   - Track the resources and display them in the corner of the screen.
+
+- [ ] **February 7, 2025**: 
+   - Add a basic interaction mechanic (e.g., collecting food or building structures).
+   - Implement basic logic to update the game state when interacting with objects (e.g., the monastery's size grows when certain conditions are met).
+
+- [ ] **February 8, 2025**: 
+   - Implement game saving and loading.
+   - Allow players to save and resume their game progress.
+
+- [ ] **February 9, 2025**: 
+   - Polish the game loop and test all features.
+   - Ensure the movement is smooth, the UI updates correctly, and resources are tracked properly.
+
+- [ ] **February 10, 2025**: 
+   - Final testing and bug fixing.
+   - Prepare a demo or presentation if needed.
+
+---
+
 ## MVP Scope Breakdown:
 
 - **Visuals**:  
