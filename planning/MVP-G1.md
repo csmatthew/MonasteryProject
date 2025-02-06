@@ -59,7 +59,7 @@
    - Set up the basic game window, initialize Pygame, and create the abbot object.
    - Handle basic keyboard input to move the abbot.
 
-- [ ] **February 5, 2025**: 
+- [x] **February 5, 2025**: 
    - Design the background, creating a simple layout for the monastery (e.g., a grid, or just a blank space with objects).
    - Display the abbot on the screen.
 
@@ -90,12 +90,12 @@
 ## MVP Scope Breakdown:
 
 - **Visuals**:  
-  - [ ] Use simple graphics (e.g., circles or squares for the abbot, and simple shapes for structures). _(In Development)_
-  - [ ] Keep the visuals minimal — focus on gameplay and mechanics first. _(In Development)_
+  - [x] Use simple graphics (e.g., circles or squares for the abbot, and simple shapes for structures). 
+  - [x] Keep the visuals minimal — focus on gameplay and mechanics first. 
   
 - **Movement Mechanics**:  
   - [x] Implement basic movement with keyboard controls (e.g., arrow keys or WASD).
-  - [ ] Smooth movement will be key, but it doesn’t need to be perfect for the MVP. _(In Development)_
+  - [x] Smooth movement will be key, but it doesn’t need to be perfect for the MVP.
   
 - **Game State**:  
   - [ ] Introduce a simple resource management mechanic. For example, you can track resources like food or stone, which increase when the abbot interacts with certain objects (e.g., collecting resources from a farm or quarry). _(Pending)_
