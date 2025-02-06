@@ -11,17 +11,36 @@ class Abbot:
         self.radius = 10
         self.speed = 5  # Movement speed
 
-    def move_towards_target(self):
-        """Move abbot step by step towards target position."""
+    def move_towards_target(self, obstacles):
+        """
+        Move abbot step by step towards target position, stopping at obstacles.
+        """
+        next_x, next_y = self.x, self.y
+
         if self.x < self.target_x:
-            self.x += min(self.speed, self.target_x - self.x)
+            next_x += min(self.speed, self.target_x - self.x)
         elif self.x > self.target_x:
-            self.x -= min(self.speed, self.x - self.target_x)
+            next_x -= min(self.speed, self.x - self.target_x)
 
         if self.y < self.target_y:
-            self.y += min(self.speed, self.target_y - self.y)
+            next_y += min(self.speed, self.target_y - self.y)
         elif self.y > self.target_y:
-            self.y -= min(self.speed, self.y - self.target_y)
+            next_y -= min(self.speed, self.y - self.target_y)
+
+        # Check for collisions with obstacles
+        if not self.check_collision(next_x, next_y, obstacles):
+            self.x, self.y = next_x, next_y
+
+    def check_collision(self, next_x, next_y, obstacles):
+        """Check for collisions with obstacles at the next position."""
+        abbot_rect = pygame.Rect(
+            next_x - self.radius, next_y - self.radius,
+            self.radius * 2, self.radius * 2
+        )
+        for obstacle in obstacles:
+            if abbot_rect.colliderect(obstacle.rect):
+                return True
+        return False
 
     def set_target(self, mouse_x, mouse_y, width, height):
         """Convert mouse click to nearest grid position

@@ -1,6 +1,7 @@
 import pygame
 from settings import WIDTH, HEIGHT, FPS, LIGHT_BROWN, WHITE
 from entities.abbot import Abbot
+from entities.obstacle import Obstacle
 
 # Initialize Pygame
 pygame.init()
@@ -16,6 +17,13 @@ grid_size = 20
 # Create an instance of Abbot
 abbot = Abbot(WIDTH // 2, HEIGHT // 2, grid_size)
 
+# Create obstacles
+obstacles = [
+    Obstacle(100, 100, grid_size, grid_size),
+    Obstacle(200, 200, grid_size, grid_size),
+    Obstacle(300, 300, grid_size, grid_size)
+]
+
 
 def draw_grid(screen):
     """Draw a simple grid for the monastery layout."""
@@ -23,6 +31,18 @@ def draw_grid(screen):
         pygame.draw.line(screen, (100, 100, 100), (x, 0), (x, HEIGHT))
     for y in range(0, HEIGHT, grid_size):  # Horizontal lines
         pygame.draw.line(screen, (100, 100, 100), (0, y), (WIDTH, y))
+
+
+def check_collisions(abbot, obstacles):
+    """Check for collisions between the abbot and obstacles."""
+    abbot_rect = pygame.Rect(
+        abbot.x - abbot.radius, abbot.y - abbot.radius,
+        abbot.radius * 2, abbot.radius * 2
+    )
+    for obstacle in obstacles:
+        if abbot_rect.colliderect(obstacle.rect):
+            return True
+    return False
 
 
 # Game loop
@@ -36,12 +56,14 @@ while running:
             abbot.set_target(mouse_x, mouse_y, WIDTH, HEIGHT)
 
     # Move abbot towards the target
-    abbot.move_towards_target()
+    abbot.move_towards_target(obstacles)
 
     # Draw everything
     screen.fill(LIGHT_BROWN)
     draw_grid(screen)
     abbot.draw(screen, WHITE)
+    for obstacle in obstacles:
+        obstacle.draw(screen, (0, 0, 0))  # Draw obstacles in black
 
     # Refresh screen
     pygame.display.update()
