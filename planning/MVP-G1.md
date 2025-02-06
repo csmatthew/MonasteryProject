@@ -136,7 +136,7 @@
 
 ## Outcome:
 By the end of the week, you will have a simple game where:
-- [ ] The player can move around the screen.
+- [x] The player can move around the screen.
 - [ ] Basic resources (e.g., food, monks) are collected.
 - [ ] The player can track their progress and potentially save/load their game.
 
