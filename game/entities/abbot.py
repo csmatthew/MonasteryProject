@@ -3,11 +3,11 @@ import pygame
 
 class Abbot:
     def __init__(self, x, y, grid_size):
-        self.x = x
-        self.y = y
         self.grid_size = grid_size
-        self.target_x = x  # Target position
-        self.target_y = y
+        self.x = (x // grid_size) * grid_size + grid_size // 2
+        self.y = (y // grid_size) * grid_size + grid_size // 2
+        self.target_x = self.x  # Target position
+        self.target_y = self.y
         self.radius = 10
         self.speed = 5  # Movement speed
 
