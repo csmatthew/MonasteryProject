@@ -25,11 +25,11 @@
    The abbot (represented by a simple dot or circle) can move in four directions (up, down, left, right) using keyboard input.  
    - Time Estimate: 1-2 days
 
-- [ ] **Basic Game Loop**  
+- [x] **Basic Game Loop**  
    The game should run in a loop where the screen refreshes continuously and the game checks for player input (movement) and updates the display.  
    - Time Estimate: 1 day
 
-- [ ] **Monastery Background**  
+- [x] **Monastery Background**  
    Create a simple static background to represent the monastery area (e.g., a grid or basic visual layout).  
    - Time Estimate: 1 day
 
