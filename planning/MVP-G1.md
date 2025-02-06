@@ -55,7 +55,7 @@
 
 ## Schedule:
 
-- [ ] **February 4, 2025**: 
+- [x] **February 4, 2025**: 
    - Set up the basic game window, initialize Pygame, and create the abbot object.
    - Handle basic keyboard input to move the abbot.
 
