@@ -6,6 +6,7 @@ from entities.obstacle import Obstacle
 from gui.grid import draw_grid
 from gui.hud import HUD
 from gui.menu import Menu
+from gui.map_view import MapView
 
 # Initialize Pygame
 pygame.init()
@@ -31,9 +32,15 @@ obstacles = [
 # Initialize pygame_gui
 manager = pygame_gui.UIManager((WIDTH, HEIGHT))
 
-# Create HUD and Menu
+# Create HUD, Menu, and MapView
 hud = HUD()
 menu = Menu(manager)
+map_view = MapView(manager)
+
+# Set initial view
+current_view = 'menu'
+previous_view = None
+game_paused = False
 
 
 def check_collisions(abbot, obstacles):
@@ -55,33 +62,58 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            abbot.set_target(mouse_x, mouse_y, WIDTH, HEIGHT)
+
+        # Handle events based on the current view
+        if current_view == 'menu':
+            view_result = menu.handle_events(event)
+            if view_result:
+                current_view = view_result
+                game_paused = current_view == 'menu'
+        elif current_view == 'map':
+            view_result = map_view.handle_events(event)
+            if view_result:
+                current_view = view_result
+        elif current_view == 'game':
+            if event.type == pygame.MOUSEBUTTONDOWN and not game_paused:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                abbot.set_target(mouse_x, mouse_y, WIDTH, HEIGHT)
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                if menu.main_menu.visible:
+                    menu.main_menu.hide()
+                    game_paused = False
+                else:
+                    menu.main_menu.show()
+                    game_paused = True
 
         # Pass events to pygame_gui
         manager.process_events(event)
-        menu.handle_events(event)
-
-    # Move abbot towards the target
-    abbot.move_towards_target(obstacles)
-
-    # Update HUD
-    hud.update(abbot.health, abbot.score)
 
     # Update pygame_gui
     manager.update(time_delta)
 
-    # Draw everything
-    screen.fill(LIGHT_BROWN)
-    draw_grid(screen, grid_size)
-    abbot.draw(screen, WHITE)
-    for obstacle in obstacles:
-        obstacle.draw(screen, (0, 0, 0))  # Draw obstacles in black
+    # Update game state based on the current view
+    if current_view == 'game' and not game_paused:
+        abbot.move_towards_target(obstacles)
 
-    # Draw HUD and Menu
-    hud.draw(screen)
-    menu.draw(screen)
+    # Draw based on the current view
+    screen.fill(LIGHT_BROWN)
+    if current_view == 'menu':
+        draw_grid(screen, grid_size)
+        abbot.draw(screen, WHITE)
+        for obstacle in obstacles:
+            obstacle.draw(screen, (0, 0, 0))  # Draw obstacles in black
+        hud.draw(screen)
+        menu.draw(screen)
+    elif current_view == 'map':
+        map_view.draw(screen)
+    elif current_view == 'game':
+        draw_grid(screen, grid_size)
+        abbot.draw(screen, WHITE)
+        for obstacle in obstacles:
+            obstacle.draw(screen, (0, 0, 0))  # Draw obstacles in black
+        hud.draw(screen)
+        if menu.main_menu.visible:
+            menu.draw(screen)
 
     # Refresh screen
     pygame.display.update()
