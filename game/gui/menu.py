@@ -21,6 +21,12 @@ class Menu:
             manager=self.manager,
             container=self.main_menu
         )
+        self.show_map_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((50, 100), (200, 50)),
+            text='Show Map',
+            manager=self.manager,
+            container=self.main_menu
+        )
         self.quit_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((50, 150), (200, 50)),
             text='Quit',
@@ -34,11 +40,19 @@ class Menu:
                 if event.ui_element == self.start_button:
                     print("Start Game button pressed")
                     self.main_menu.hide()  # Hide the main menu
-                    # Add logic to start the game
+                    return 'game'  # Switch to the game view
+                elif event.ui_element == self.show_map_button:
+                    print("Show Map button pressed")
+                    self.main_menu.hide()  # Hide the main menu
+                    return 'map'  # Switch to the map view
                 elif event.ui_element == self.quit_button:
                     print("Quit button pressed")
                     pygame.quit()
                     exit()
+            elif event.user_type == pygame_gui.UI_WINDOW_CLOSE and event.ui_element == self.main_menu:
+                print("Main menu closed")
+                self.main_menu.hide()
+                return 'game'  # Return to the game view
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 if self.main_menu.visible:
