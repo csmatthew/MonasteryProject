@@ -11,6 +11,8 @@ class Abbot:
         self.radius = 10
         self.speed = 1  # Movement speed
         self.path = []  # Store the calculated path
+        self.health = 100  # Initialize health
+        self.score = 0  # Initialize score
 
     def move_towards_target(self, obstacles):
         """
@@ -100,5 +102,5 @@ class Abbot:
     def draw_path(self, screen, color):
         """Draw the path as a series of dots."""
         for i, (x, y) in enumerate(self.path):
-            if i % 10 == 0:  # Draw every 10th point to create a dotted effect
-                pygame.draw.circle(screen, color, (x, y), 1)
+            if i % 5 == 0:  # Draw every 5th point to create a dotted effect
+                pygame.draw.circle(screen, color, (x, y), 2)
