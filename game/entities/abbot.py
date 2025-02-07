@@ -9,7 +9,8 @@ class Abbot:
         self.target_x = self.x  # Target position
         self.target_y = self.y
         self.radius = 10
-        self.speed = 5  # Movement speed
+        self.speed = 1  # Movement speed
+        self.path = []  # Store the calculated path
 
     def move_towards_target(self, obstacles):
         """
@@ -30,6 +31,10 @@ class Abbot:
         # Check for collisions with obstacles
         if not self.check_collision(next_x, next_y, obstacles):
             self.x, self.y = next_x, next_y
+
+        # Remove the points from the path that the abbot has passed over
+        if self.path and (self.x, self.y) == self.path[0]:
+            self.path.pop(0)
 
     def check_collision(self, next_x, next_y, obstacles):
         """Check for collisions with obstacles at the next position."""
@@ -62,6 +67,38 @@ class Abbot:
                 height - self.radius, self.target_y
             ))
 
+        # Calculate the path when the target is set
+        self.path = self.calculate_path()
+
     def draw(self, screen, color):
         """Draw the abbot on the screen."""
         pygame.draw.circle(screen, color, (self.x, self.y), self.radius)
+        self.draw_path(screen, color)
+
+    def calculate_path(self):
+        """
+        Calculate the path from the current position to the target position.
+        """
+        path = []
+        current_x, current_y = self.x, self.y
+
+        while current_x != self.target_x or current_y != self.target_y:
+            if current_x < self.target_x:
+                current_x += min(self.speed, self.target_x - current_x)
+            elif current_x > self.target_x:
+                current_x -= min(self.speed, current_x - self.target_x)
+
+            if current_y < self.target_y:
+                current_y += min(self.speed, self.target_y - current_y)
+            elif current_y > self.target_y:
+                current_y -= min(self.speed, current_y - self.target_y)
+
+            path.append((current_x, current_y))
+
+        return path
+
+    def draw_path(self, screen, color):
+        """Draw the path as a series of dots."""
+        for i, (x, y) in enumerate(self.path):
+            if i % 10 == 0:  # Draw every 10th point to create a dotted effect
+                pygame.draw.circle(screen, color, (x, y), 1)
