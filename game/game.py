@@ -1,8 +1,11 @@
 import pygame
+import pygame_gui
 from settings import WIDTH, HEIGHT, FPS, LIGHT_BROWN, WHITE
 from entities.abbot import Abbot
 from entities.obstacle import Obstacle
 from gui.grid import draw_grid
+from gui.hud import HUD
+from gui.menu import Menu
 
 # Initialize Pygame
 pygame.init()
@@ -25,6 +28,13 @@ obstacles = [
     Obstacle(300, 300, grid_size, grid_size)
 ]
 
+# Initialize pygame_gui
+manager = pygame_gui.UIManager((WIDTH, HEIGHT))
+
+# Create HUD and Menu
+hud = HUD()
+menu = Menu(manager)
+
 
 def check_collisions(abbot, obstacles):
     """Check for collisions between the abbot and obstacles."""
@@ -41,6 +51,7 @@ def check_collisions(abbot, obstacles):
 # Game loop
 running = True
 while running:
+    time_delta = clock.tick(FPS) / 1000.0  # Time in seconds since last frame
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -48,8 +59,18 @@ while running:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             abbot.set_target(mouse_x, mouse_y, WIDTH, HEIGHT)
 
+        # Pass events to pygame_gui
+        manager.process_events(event)
+        menu.handle_events(event)
+
     # Move abbot towards the target
     abbot.move_towards_target(obstacles)
+
+    # Update HUD
+    hud.update(abbot.health, abbot.score)
+
+    # Update pygame_gui
+    manager.update(time_delta)
 
     # Draw everything
     screen.fill(LIGHT_BROWN)
@@ -58,8 +79,11 @@ while running:
     for obstacle in obstacles:
         obstacle.draw(screen, (0, 0, 0))  # Draw obstacles in black
 
+    # Draw HUD and Menu
+    hud.draw(screen)
+    menu.draw(screen)
+
     # Refresh screen
     pygame.display.update()
-    clock.tick(FPS)  # Use FPS from settings
 
 pygame.quit()
