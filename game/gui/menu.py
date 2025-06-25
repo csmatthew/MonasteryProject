@@ -49,7 +49,8 @@ class Menu:
                     print("Quit button pressed")
                     pygame.quit()
                     exit()
-            elif event.user_type == pygame_gui.UI_WINDOW_CLOSE and event.ui_element == self.main_menu:
+            elif (event.user_type == pygame_gui.UI_WINDOW_CLOSE and
+                  event.ui_element == self.main_menu):
                 print("Main menu closed")
                 self.main_menu.hide()
                 return 'game'  # Return to the game view
