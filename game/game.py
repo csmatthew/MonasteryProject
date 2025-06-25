@@ -3,10 +3,11 @@ import pygame_gui
 from settings import WIDTH, HEIGHT, FPS, LIGHT_BROWN, WHITE
 from entities.abbot import Abbot
 from entities.obstacle import Obstacle
+from entities.npc import NPC
 from gui.grid import draw_grid
 from gui.hud import HUD
-from gui.menu import Menu
-from gui.map_view import MapView
+# from gui.menu import Menu
+# from gui.map_view import MapView
 
 # Initialize Pygame
 pygame.init()
@@ -29,16 +30,19 @@ obstacles = [
     Obstacle(300, 300, grid_size, grid_size)
 ]
 
+# Create an instance of NPC
+npc = NPC(150, 150, grid_size, WIDTH, HEIGHT)
+
 # Initialize pygame_gui
 manager = pygame_gui.UIManager((WIDTH, HEIGHT))
 
 # Create HUD, Menu, and MapView
 hud = HUD()
-menu = Menu(manager)
-map_view = MapView(manager)
+# menu = Menu(manager)
+# map_view = MapView(manager)
 
 # Set initial view
-current_view = 'menu'
+current_view = 'game'  # Start directly in game view
 previous_view = None
 game_paused = False
 
@@ -64,26 +68,28 @@ while running:
             running = False
 
         # Handle events based on the current view
-        if current_view == 'menu':
-            view_result = menu.handle_events(event)
-            if view_result:
-                current_view = view_result
-                game_paused = current_view == 'menu'
-        elif current_view == 'map':
-            view_result = map_view.handle_events(event)
-            if view_result:
-                current_view = view_result
-        elif current_view == 'game':
+        # if current_view == 'menu':
+        #     view_result = menu.handle_events(event)
+        #     if view_result:
+        #         current_view = view_result
+        #         game_paused = current_view == 'menu'
+        # elif current_view == 'map':
+        #     view_result = map_view.handle_events(event)
+        #     if view_result:
+        #         current_view = view_result
+        # elif current_view == 'game':
+        if current_view == 'game':
             if event.type == pygame.MOUSEBUTTONDOWN and not game_paused:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 abbot.set_target(mouse_x, mouse_y, WIDTH, HEIGHT)
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                if menu.main_menu.visible:
-                    menu.main_menu.hide()
-                    game_paused = False
-                else:
-                    menu.main_menu.show()
-                    game_paused = True
+            # elif (event.type == pygame.KEYDOWN and
+            #       event.key == pygame.K_ESCAPE):
+            #     if menu.main_menu.visible:
+            #         menu.main_menu.hide()
+            #         game_paused = False
+            #     else:
+            #         menu.main_menu.show()
+            #         game_paused = True
 
         # Pass events to pygame_gui
         manager.process_events(event)
@@ -94,26 +100,28 @@ while running:
     # Update game state based on the current view
     if current_view == 'game' and not game_paused:
         abbot.move_towards_target(obstacles)
+        npc.move(obstacles)
 
     # Draw based on the current view
     screen.fill(LIGHT_BROWN)
-    if current_view == 'menu':
+    # if current_view == 'menu':
+    #     draw_grid(screen, grid_size)
+    #     abbot.draw(screen, WHITE)
+    #     for obstacle in obstacles:
+    #         obstacle.draw(screen, (0, 0, 0))  # Draw obstacles in black
+    #     hud.draw(screen)
+    #     menu.draw(screen)
+    # elif current_view == 'map':
+    #     map_view.draw(screen)
+    if current_view == 'game':
         draw_grid(screen, grid_size)
         abbot.draw(screen, WHITE)
+        npc.draw(screen)  # <-- Draw the NPC
         for obstacle in obstacles:
             obstacle.draw(screen, (0, 0, 0))  # Draw obstacles in black
         hud.draw(screen)
-        menu.draw(screen)
-    elif current_view == 'map':
-        map_view.draw(screen)
-    elif current_view == 'game':
-        draw_grid(screen, grid_size)
-        abbot.draw(screen, WHITE)
-        for obstacle in obstacles:
-            obstacle.draw(screen, (0, 0, 0))  # Draw obstacles in black
-        hud.draw(screen)
-        if menu.main_menu.visible:
-            menu.draw(screen)
+        # if menu.main_menu.visible:
+        #     menu.draw(screen)
 
     # Refresh screen
     pygame.display.update()
