@@ -23,3 +23,5 @@ Thumbs.db        # Windows
 
 # Other
 notes/
+documentation/
+*.3dm
